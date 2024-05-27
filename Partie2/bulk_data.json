@@ -1,0 +1,8 @@
+{ "index": { "_index": "test03", "_id": "1" } }
+{ "titre": "Premier document", "description": "C'est la première fois que je crée un document dans ES.", "quantité": 12, "date_creation": "10-05-2024" }
+{ "index": { "_index": "test03", "_id": "2" } }
+{ "titre": "Deuxième document", "description": "C'est le deuxième document.", "quantité": 5, "date_creation": "11-05-2024" }
+{ "index": { "_index": "test03", "_id": "3" } }
+{ "titre": "Troisième document", "description": "Voici un troisième document.", "quantité": 7, "date_creation": "12-05-2024" }
+{ "index": { "_index": "test03", "_id": "4" } }
+{ "titre": "Quatrième document", "description": "Ceci est le quatrième document.", "quantité": 10, "date_creation": "13-05-2024" }

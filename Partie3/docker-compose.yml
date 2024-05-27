@@ -1,0 +1,81 @@
+version: '3'
+services:
+  es_part3_01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    container_name: es_part3_01
+    environment:
+      - node.name=es_part3_01
+      - cluster.name=es-docker-cluster-part3
+      - discovery.seed_hosts=es_part3_02,es_part3_03
+      - cluster.initial_master_nodes=es_part3_01,es_part3_02,es_part3_03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata_part3_01:/usr/share/elasticsearch/data
+    ports:
+      - 9201:9200
+    networks:
+      - esnet_part3
+
+  es_part3_02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    container_name: es_part3_02
+    environment:
+      - node.name=es_part3_02
+      - cluster.name=es-docker-cluster-part3
+      - discovery.seed_hosts=es_part3_01,es_part3_03
+      - cluster.initial_master_nodes=es_part3_01,es_part3_02,es_part3_03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata_part3_02:/usr/share/elasticsearch/data
+    networks:
+      - esnet_part3
+
+  es_part3_03:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    container_name: es_part3_03
+    environment:
+      - node.name=es_part3_03
+      - cluster.name=es-docker-cluster-part3
+      - discovery.seed_hosts=es_part3_01,es_part3_02
+      - cluster.initial_master_nodes=es_part3_01,es_part3_02,es_part3_03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata_part3_03:/usr/share/elasticsearch/data
+    networks:
+      - esnet_part3
+
+  kibana_part3:
+    image: docker.elastic.co/kibana/kibana:7.12.0
+    container_name: kibana_part3
+    ports:
+      - 5602:5601
+    environment:
+      ELASTICSEARCH_URL: http://es_part3_01:9200
+    networks:
+      - esnet_part3
+
+volumes:
+  esdata_part3_01:
+    driver: local
+  esdata_part3_02:
+    driver: local
+  esdata_part3_03:
+    driver: local
+
+networks:
+  esnet_part3:
